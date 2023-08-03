@@ -1,6 +1,5 @@
 const functions = require('@google-cloud/functions-framework');
 const puppeteer = require("puppeteer");
-// const chromium = require("@sparticuz/chromium");
 
 
 functions.http('getDiv', async (req, res) => {
@@ -9,9 +8,6 @@ functions.http('getDiv', async (req, res) => {
   console.log(`Looking for ${selector} in ${url}`);
 
   let value = null;
-
-  // Optional: If you'd like to use the legacy headless mode. "new" is the default.
-  // chromium.setHeadlessMode = "new";
 
   // Launch the browser
   const browser = await puppeteer.launch({ headless: true });
@@ -35,28 +31,19 @@ functions.http('getDiv', async (req, res) => {
     value = await page.$eval(selector, el => el.innerText);
     await browser.close();
 
+    // Print the value
+    console.log(`Found ${value}`);
+
     // Return the value
     res.send(JSON.stringify({ value }));
-    // return {
-    //   statusCode: 200,
-    //   body: JSON.stringify({
-    //     value,
-    //   })
-    // }
-
 
   } catch (error) {
     await browser.close();
 
     console.log(error);
     res.send(JSON.stringify({ error: 'Failed' }));
-    // return {
-    //   statusCode: 500,
-    //   body: JSON.stringify({ error: 'Failed' }),
-    // }
   }
 
 
   res.send("done");
-  //res.send(`Hello ${req.query.name || req.body.name || 'World'}!`);
 });

@@ -4,10 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.0.0",
+    "@google-cloud/functions-framework": "^3.3.0",
     "puppeteer": "^20.5.0"
   },
   "scripts": {
-    "gcp-build": "node node_modules/puppeteer/install.js"
+    "gcp-build": "node node_modules/puppeteer/install.js",
+    "start": "npx functions-framework --target=getDiv --signature-type=http",
+    "deploy": "gcloud functions deploy getDiv --gen2 --runtime=nodejs18 --region=us-central1 --source=. --entry-point=getDiv    --trigger-http --allow-unauthenticated",
+    "delete": "gcloud functions delete getDiv --gen2 --region=us-central1"
   }
 }
