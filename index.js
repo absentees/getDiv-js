@@ -1,8 +1,8 @@
 const functions = require('@google-cloud/functions-framework');
 const puppeteer = require("puppeteer");
 
-
 functions.http('getDiv', async (req, res) => {
+  return;
 
   const { url, selector } = req.body;
   console.log(`Looking for ${selector} in ${url}`);
@@ -43,7 +43,4 @@ functions.http('getDiv', async (req, res) => {
     console.log(error);
     res.send(JSON.stringify({ error: 'Failed' }));
   }
-
-
-  res.send("done");
 });
